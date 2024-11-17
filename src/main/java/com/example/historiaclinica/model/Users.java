@@ -18,7 +18,7 @@ public class Users {
     private String address;       // Dirección
     private String uniqueId;      // ID único
     private String status;        // Estado (por ejemplo, activo, inactivo)
-    private int coursesEnroll;    // Número de cursos en los que está inscrito
+    private Integer coursesEnroll;    // Número de cursos en los que está inscrito
     private String imageUrl;      // URL de la imagen de perfil
 
     @ManyToMany(fetch = FetchType.EAGER)

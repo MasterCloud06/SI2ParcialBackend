@@ -1,7 +1,6 @@
 package com.example.historiaclinica.controller;
 
 import com.example.historiaclinica.dto.RoleAssignmentDto;
-import com.example.historiaclinica.dto.UserProfileDto;
 import com.example.historiaclinica.dto.UserRegistrationDto;
 import com.example.historiaclinica.dto.UserUpdateDto;
 import com.example.historiaclinica.model.Role;
@@ -11,6 +10,9 @@ import com.example.historiaclinica.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +25,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     // Endpoint para registrar un nuevo usuario con roles
     @PostMapping("/register")
@@ -91,11 +96,13 @@ public class UserController {
         userService.deleteUser(userId);
         return ResponseEntity.ok("User deleted successfully");
     }
+    @GetMapping("/{id}/profile")
+    public ResponseEntity<Users> getUserProfile(@PathVariable Long id, Authentication authentication) {
+        // Opcional: Verificar si el usuario tiene permiso para ver este perfil
+        Users user = userService.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-    @GetMapping("/{userId}/profile")
-public ResponseEntity<UserProfileDto> getUserProfile(@PathVariable Long userId) {
-    UserProfileDto userProfile = userService.getUserProfile(userId);
-    return ResponseEntity.ok(userProfile);
-}
+        return ResponseEntity.ok(user);
+    }
 
 }

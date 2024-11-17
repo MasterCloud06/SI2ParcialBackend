@@ -8,8 +8,8 @@ public class HistoriaClinicaRequestDto {
     private Long medicoId;
     private LocalDateTime fechaConsulta;
     private List<String> examenes;
-    private String notasConsulta;
-    private String receta;
+    private byte[] notasConsultaOid; // Ahora es un array de bytes
+    private byte[] recetaOid; // Ahora es un array de bytes
 
     // Getters y Setters
     public Long getPacienteId() {
@@ -44,19 +44,19 @@ public class HistoriaClinicaRequestDto {
         this.examenes = examenes;
     }
 
-    public String getNotasConsulta() {
-        return notasConsulta;
+    public byte[] getNotasConsultaOid() {
+        return notasConsultaOid;
     }
 
-    public void setNotasConsulta(String notasConsulta) {
-        this.notasConsulta = notasConsulta;
+    public void setNotasConsultaOid(byte[] notasConsultaOid) {
+        this.notasConsultaOid = notasConsultaOid;
     }
 
-    public String getReceta() {
-        return receta;
+    public byte[] getRecetaOid() {
+        return recetaOid;
     }
 
-    public void setReceta(String receta) {
-        this.receta = receta;
+    public void setRecetaOid(byte[] recetaOid) {
+        this.recetaOid = recetaOid;
     }
 }

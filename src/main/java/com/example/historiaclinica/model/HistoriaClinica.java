@@ -24,11 +24,13 @@ public class HistoriaClinica {
     @ElementCollection
     private List<String> examenes; // Lista de exámenes como nombres de archivos o enlaces
 
-    @Column(name = "notas_consulta", columnDefinition = "TEXT")
-    private String notasConsulta; // Notas o informe del médico
+    @Lob
+    @Column(name = "notas_consulta_oid", columnDefinition = "oid")
+    private byte[] notasConsultaOid; // Notas o informe del médico en formato binario
 
-    @Column(name = "receta", columnDefinition = "TEXT")
-    private String receta; // Receta o tratamiento del paciente
+    @Lob
+    @Column(name = "receta_oid", columnDefinition = "oid")
+    private byte[] recetaOid; // Receta o tratamiento del paciente en formato binario
 
     public HistoriaClinica() {}
 
@@ -74,19 +76,19 @@ public class HistoriaClinica {
         this.examenes = examenes;
     }
 
-    public String getNotasConsulta() {
-        return notasConsulta;
+    public byte[] getNotasConsultaOid() {
+        return notasConsultaOid;
     }
 
-    public void setNotasConsulta(String notasConsulta) {
-        this.notasConsulta = notasConsulta;
+    public void setNotasConsultaOid(byte[] notasConsultaOid) {
+        this.notasConsultaOid = notasConsultaOid;
     }
 
-    public String getReceta() {
-        return receta;
+    public byte[] getRecetaOid() {
+        return recetaOid;
     }
 
-    public void setReceta(String receta) {
-        this.receta = receta;
+    public void setRecetaOid(byte[] recetaOid) {
+        this.recetaOid = recetaOid;
     }
 }

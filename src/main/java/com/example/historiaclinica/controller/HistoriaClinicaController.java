@@ -24,6 +24,7 @@ public class HistoriaClinicaController {
 
     @PostMapping
     public ResponseEntity<HistoriaClinicaDto> createHistoriaClinica(@RequestBody HistoriaClinicaRequestDto requestDto) {
+        // No es necesario realizar ninguna conversión adicional aquí, ya que las propiedades son byte[]
         HistoriaClinicaDto historiaClinica = historiaClinicaService.createHistoriaClinica(requestDto);
         return ResponseEntity.ok(historiaClinica);
     }

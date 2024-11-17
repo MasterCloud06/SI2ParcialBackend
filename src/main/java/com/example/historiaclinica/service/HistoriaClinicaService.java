@@ -36,7 +36,7 @@ public class HistoriaClinicaService {
         // Busca el paciente y el médico por sus IDs
         Paciente paciente = pacienteRepository.findById(requestDto.getPacienteId())
                 .orElseThrow(() -> new IllegalArgumentException("Paciente no encontrado con ID: " + requestDto.getPacienteId()));
-        
+
         Medico medico = medicoRepository.findById(requestDto.getMedicoId())
                 .orElseThrow(() -> new IllegalArgumentException("Médico no encontrado con ID: " + requestDto.getMedicoId()));
 
@@ -46,8 +46,10 @@ public class HistoriaClinicaService {
         historiaClinica.setMedico(medico);
         historiaClinica.setFechaConsulta(requestDto.getFechaConsulta());
         historiaClinica.setExamenes(requestDto.getExamenes());
-        historiaClinica.setNotasConsulta(requestDto.getNotasConsulta());
-        historiaClinica.setReceta(requestDto.getReceta());
+        
+        // Asigna los byte[] directamente
+        historiaClinica.setNotasConsultaOid(requestDto.getNotasConsultaOid());
+        historiaClinica.setRecetaOid(requestDto.getRecetaOid());
         
         HistoriaClinica saved = historiaClinicaRepository.save(historiaClinica);
         return convertToDto(saved);
@@ -60,8 +62,10 @@ public class HistoriaClinicaService {
         dto.setMedicoId(historiaClinica.getMedico().getId());
         dto.setFechaConsulta(historiaClinica.getFechaConsulta());
         dto.setExamenes(historiaClinica.getExamenes());
-        dto.setNotasConsulta(historiaClinica.getNotasConsulta());
-        dto.setReceta(historiaClinica.getReceta());
+
+        // Convierte byte[] a String si es necesario, o maneja como byte[]
+        dto.setNotasConsultaOid(historiaClinica.getNotasConsultaOid());
+        dto.setRecetaOid(historiaClinica.getRecetaOid());
         return dto;
     }
 }
