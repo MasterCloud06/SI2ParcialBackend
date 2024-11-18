@@ -1,6 +1,5 @@
 package com.example.historiaclinica.config;
 
-
 import io.jsonwebtoken.JwtException;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -45,16 +44,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 if (jwtTokenProvider.validateToken(token)) {
                     String username = jwtTokenProvider.getUsernameFromToken(token);
 
-                    // Cargar el usuario completo desde el servicio
+                    // Obtener roles desde el token
+                        List<String> roles = jwtTokenProvider.getRolesFromToken(token);
+
+                    // Convertir roles en autoridades
+                    List<SimpleGrantedAuthority> authorities = roles.stream()
+                            .map(SimpleGrantedAuthority::new)
+                            .collect(Collectors.toList());
+
+                    // Cargar el usuario desde el servicio
                     Users user = userService.findByUsername(username)
                             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-                    // Convertir los roles del usuario en autoridades
-                    List<SimpleGrantedAuthority> authorities = user.getRoles().stream()
-                            .map(role -> new SimpleGrantedAuthority(role.getName().name()))
-                            .collect(Collectors.toList());
-
-                    // Crear la autenticación con autoridades
+                    // Crear la autenticación con roles
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(user, null, authorities);
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

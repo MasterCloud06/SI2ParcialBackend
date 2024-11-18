@@ -23,6 +23,20 @@ public class FichaAtencionController {
         return ResponseEntity.ok(fichaAtencionDto);
     }
 
+    @GetMapping
+    public ResponseEntity<List<FichaAtencionDto>> getAllFichas() {
+        List<FichaAtencionDto> fichas = fichaAtencionService.getAllFichas();
+        return ResponseEntity.ok(fichas);
+    }
+
+    @GetMapping("/{fichaId}")
+public ResponseEntity<FichaAtencionDto> getFichaById(@PathVariable Long fichaId) {
+    FichaAtencionDto ficha = fichaAtencionService.getFichaById(fichaId);
+    return ResponseEntity.ok(ficha);
+}
+
+    
+
     @GetMapping("/medico/{medicoId}/fecha/{fecha}")
     public ResponseEntity<List<FichaAtencionDto>> getFichasByMedicoAndFecha(
             @PathVariable Long medicoId,

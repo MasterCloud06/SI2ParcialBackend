@@ -105,4 +105,8 @@ public class UserService implements UserDetailsService {
 
         return userProfileDto;
     }
+     // Método para obtener usuarios por rol
+    public List<Users> findUsersByRole(RoleName roleName) {
+        return userRepository.findByRoles_Name(roleName);
+    }
 }

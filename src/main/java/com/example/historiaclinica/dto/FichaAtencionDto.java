@@ -5,12 +5,24 @@ import java.time.LocalTime;
 
 public class FichaAtencionDto {
     private Long id;
-    private Long pacienteId;
-    private Long medicoId;
-    private Long especialidadId;
+    private String pacienteNombre; // Cambiado a String
+    private String medicoNombre; // Cambiado a String
+    private String especialidadNombre; // Cambiado a String
     private LocalDate fecha;
     private LocalTime hora;
     private String estado;
+
+    // Constructor con todos los parámetros
+    public FichaAtencionDto(Long id, String pacienteNombre, String medicoNombre, String especialidadNombre,
+                            LocalDate fecha, LocalTime hora, String estado) {
+        this.id = id;
+        this.pacienteNombre = pacienteNombre;
+        this.medicoNombre = medicoNombre;
+        this.especialidadNombre = especialidadNombre;
+        this.fecha = fecha;
+        this.hora = hora;
+        this.estado = estado;
+    }
 
     // Getters y setters
     public Long getId() {
@@ -21,28 +33,28 @@ public class FichaAtencionDto {
         this.id = id;
     }
 
-    public Long getPacienteId() {
-        return pacienteId;
+    public String getPacienteNombre() {
+        return pacienteNombre;
     }
 
-    public void setPacienteId(Long pacienteId) {
-        this.pacienteId = pacienteId;
+    public void setPacienteNombre(String pacienteNombre) {
+        this.pacienteNombre = pacienteNombre;
     }
 
-    public Long getMedicoId() {
-        return medicoId;
+    public String getMedicoNombre() {
+        return medicoNombre;
     }
 
-    public void setMedicoId(Long medicoId) {
-        this.medicoId = medicoId;
+    public void setMedicoNombre(String medicoNombre) {
+        this.medicoNombre = medicoNombre;
     }
 
-    public Long getEspecialidadId() {
-        return especialidadId;
+    public String getEspecialidadNombre() {
+        return especialidadNombre;
     }
 
-    public void setEspecialidadId(Long especialidadId) {
-        this.especialidadId = especialidadId;
+    public void setEspecialidadNombre(String especialidadNombre) {
+        this.especialidadNombre = especialidadNombre;
     }
 
     public LocalDate getFecha() {

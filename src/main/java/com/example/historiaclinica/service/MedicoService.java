@@ -28,15 +28,12 @@ public class MedicoService {
 
     @Transactional(readOnly = true)
     public Medico obtenerMedicoPorId(Long id) {
-        // Usando Optional para manejar la respuesta sin excepciones
         return medicoRepository.findById(id).orElse(null);
     }
 
     @Transactional
     public Medico guardarMedico(MedicoDto medicoDto) {
-        // Verificar si el médico ya existe para prevenir duplicados
         if (medicoRepository.existsByEmail(medicoDto.getEmail())) {
-            // Si existe, se podría devolver null o manejar de otra forma
             return null;
         }
         Medico nuevoMedico = new Medico();
@@ -52,7 +49,7 @@ public class MedicoService {
     public Medico actualizarMedico(Long id, MedicoDto medicoDto) {
         Medico medicoExistente = medicoRepository.findById(id).orElse(null);
         if (medicoExistente == null) {
-            return null; // Manejo de medico no encontrado
+            return null;
         }
         medicoExistente.setNombre(medicoDto.getNombre());
         medicoExistente.setApellido(medicoDto.getApellido());
@@ -70,17 +67,22 @@ public class MedicoService {
         }
     }
 
+    @Transactional(readOnly = true)
+    public List<Medico> obtenerMedicosPorEspecialidad(Long especialidadId) {
+        Especialidad especialidad = especialidadRepository.findById(especialidadId).orElse(null);
+        if (especialidad != null) {
+            return medicoRepository.findByEspecialidadesContaining(especialidad);
+        }
+        return List.of();
+    }
+
     private void asignarEspecialidadesAMedico(MedicoDto medicoDto, Medico medico) {
         if (medicoDto.getEspecialidadIds() != null && !medicoDto.getEspecialidadIds().isEmpty()) {
             Set<Especialidad> especialidades = especialidadRepository.findAllById(medicoDto.getEspecialidadIds())
-                .stream().collect(Collectors.toSet());
-            if (especialidades.size() == medicoDto.getEspecialidadIds().size()) {
-                medico.setEspecialidades(especialidades);
-            } else {
-                // Lógica si no se encuentran todas las especialidades, opcionalmente manejar este caso
-            }
+                    .stream().collect(Collectors.toSet());
+            medico.setEspecialidades(especialidades);
         } else {
-            medico.setEspecialidades(new HashSet<>()); // Limpiar especialidades si no se proporcionan nuevas
+            medico.setEspecialidades(new HashSet<>());
         }
     }
 }
